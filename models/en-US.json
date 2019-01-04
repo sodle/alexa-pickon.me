@@ -104,7 +104,8 @@
                 "value": "9",
                 "synonyms": ["9", "nine", "ninth"] 
               }
-            }
+            },
+            {"id":"A","name":{"value":"A","synonyms":["A","A.","Alpha"]}},{"id":"B","name":{"value":"B","synonyms":["B","B.","Bravo"]}},{"id":"C","name":{"value":"C","synonyms":["C","C.","Charlie"]}},{"id":"D","name":{"value":"D","synonyms":["D","D.","Delta"]}},{"id":"E","name":{"value":"E","synonyms":["E","E.","Echo"]}},{"id":"F","name":{"value":"F","synonyms":["F","F.","Foxtrot"]}},{"id":"G","name":{"value":"G","synonyms":["G","G.","Golf"]}},{"id":"H","name":{"value":"H","synonyms":["H","H.","Hotel"]}},{"id":"I","name":{"value":"I","synonyms":["I","I.","India"]}},{"id":"J","name":{"value":"J","synonyms":["J","J.","Juliet"]}},{"id":"K","name":{"value":"K","synonyms":["K","K.","Kilo"]}},{"id":"L","name":{"value":"L","synonyms":["L","L.","Lima"]}},{"id":"M","name":{"value":"M","synonyms":["M","M.","Mike"]}},{"id":"N","name":{"value":"N","synonyms":["N","N.","November"]}},{"id":"O","name":{"value":"O","synonyms":["O","O.","Oscar"]}},{"id":"P","name":{"value":"P","synonyms":["P","P.","Papa"]}},{"id":"Q","name":{"value":"Q","synonyms":["Q","Q.","Quebec"]}},{"id":"R","name":{"value":"R","synonyms":["R","R.","Romeo"]}},{"id":"S","name":{"value":"S","synonyms":["S","S.","Sierra"]}},{"id":"T","name":{"value":"T","synonyms":["T","T.","Tango"]}},{"id":"U","name":{"value":"U","synonyms":["U","U.","Uniform"]}},{"id":"V","name":{"value":"V","synonyms":["V","V.","Victor"]}},{"id":"W","name":{"value":"W","synonyms":["W","W.","Whiskey"]}},{"id":"X","name":{"value":"X","synonyms":["X","X.","X-ray"]}},{"id":"Y","name":{"value":"Y","synonyms":["Y","Y.","Yankee"]}},{"id":"Z","name":{"value":"Z","synonyms":["Z","Z.","Zulu"]}}
           ]
         }
       ]

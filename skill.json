@@ -6,8 +6,8 @@
           "summary": "Pick a random student from your classes",
           "examplePhrases": [
             "Alexa open random student",
-            "pick a random student from period A",
-            "choose a random student from 3rd hour"
+            "open random student for period A",
+            "ask random student for 3rd hour"
           ],
           "name": "Random Student",
           "description": "Pick a random student from your classes. Visit https://randomstudent-ba994.firebaseapp.com to set up."
