@@ -2,6 +2,7 @@
 /* eslint-disable  no-console */
 
 const Alexa = require('ask-sdk-core');
+const request = require('request-promise');
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -24,11 +25,20 @@ const FromPeriodIntentHandler = {
   },
   handle(handlerInput) {
     const classPeriod = handlerInput.requestEnvelope.request.intent.slots.classPeriod.resolutions.resolutionsPerAuthority[0].values[0].value.id;
-    const speechText = `Here's a random student from period ${classPeriod}`;
-
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .getResponse();
+    
+    return request({
+      uri: 'http://us-central1-randomstudent-ba994.cloudfunctions.net/pickRandomStudent',
+      qs: {
+        class_period: classPeriod
+      },
+      headers: {
+        Authorization: `Bearer: ${requestEnvelope.request.context.System.context.user.accessToken}`
+      }
+    }).then(response => {
+      return handlerInput.responseBuilder
+        .speak(response.student)
+        .getResponse();
+    });
   },
 };
 
@@ -38,7 +48,7 @@ const HelpIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
   },
   handle(handlerInput) {
-    const speechText = 'You can say hello to me!';
+    const speechText = 'Name a class period, and I will give you a random student.';
 
     return handlerInput.responseBuilder
       .speak(speechText)
