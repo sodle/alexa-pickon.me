@@ -18,7 +18,93 @@
         {
           "name": "FromPeriodIntent",
           "samples": [
-            "hello"
+            "from {classPeriod}",
+            "{classPeriod}",
+            "period {classPeriod}",
+            "{classPeriod} hour"
+          ],
+          "slots": [
+            {
+              "name": "classPeriod",
+              "type": "ClassPeriod"
+            }
+          ]
+        }
+      ],
+      "types": [
+        {
+          "name": "ClassPeriod",
+          "values": [
+            {
+              "id": "0",
+              "name": {
+                "value": "0",
+                "synonyms": ["0", "zero", "zeroth"] 
+              }
+            },
+            {
+              "id": "1",
+              "name": {
+                "value": "1",
+                "synonyms": ["1", "one", "first"] 
+              }
+            },
+            {
+              "id": "2",
+              "name": {
+                "value": "2",
+                "synonyms": ["2", "two", "second"] 
+              }
+            },
+            {
+              "id": "3",
+              "name": {
+                "value": "3",
+                "synonyms": ["3", "three", "third"] 
+              }
+            },
+            {
+              "id": "4",
+              "name": {
+                "value": "4",
+                "synonyms": ["4", "four", "fourth"] 
+              }
+            },
+            {
+              "id": "5",
+              "name": {
+                "value": "5",
+                "synonyms": ["5", "five", "fifth"] 
+              }
+            },
+            {
+              "id": "6",
+              "name": {
+                "value": "6",
+                "synonyms": ["6", "six", "sixth"] 
+              }
+            },
+            {
+              "id": "7",
+              "name": {
+                "value": "7",
+                "synonyms": ["7", "seven", "seventh"] 
+              }
+            },
+            {
+              "id": "8",
+              "name": {
+                "value": "8",
+                "synonyms": ["8", "eight", "eighth"] 
+              }
+            },
+            {
+              "id": "9",
+              "name": {
+                "value": "9",
+                "synonyms": ["9", "nine", "ninth"] 
+              }
+            }
           ]
         }
       ]
