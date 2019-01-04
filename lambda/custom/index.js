@@ -23,23 +23,25 @@ const FromPeriodIntentHandler = {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
       && handlerInput.requestEnvelope.request.intent.name === 'FromPeriodIntent';
   },
-  handle(handlerInput) {
+  async handle(handlerInput) {
     const classPeriod = handlerInput.requestEnvelope.request.intent.slots.classPeriod.resolutions.resolutionsPerAuthority[0].values[0].value.id;
     
-    return request({
+    console.log(JSON.stringify(handlerInput.requestEnvelope, 2));
+    return await request({
       uri: 'http://us-central1-randomstudent-ba994.cloudfunctions.net/pickRandomStudent',
       qs: {
         class_period: classPeriod
       },
       headers: {
-        Authorization: `Bearer: ${requestEnvelope.request.context.System.context.user.accessToken}`
+        Authorization: `Bearer ${handlerInput.requestEnvelope.context.System.user.accessToken}`
       }
-    }).then(response => {
+    }).then(body => {
+      const response = JSON.parse(body);
       return handlerInput.responseBuilder
-        .speak(response.student)
+        .speak(`${response.student}`)
         .getResponse();
     });
-  },
+  }
 };
 
 const HelpIntentHandler = {
