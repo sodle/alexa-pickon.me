@@ -8,13 +8,39 @@ const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
-  handle(handlerInput) {
-    const speechText = 'From what period?';
+  async handle(handlerInput) {
+    const periods = await request({
+      uri: 'http://us-central1-randomstudent-ba994.cloudfunctions.net/listClassPeriods',
+      headers: {
+        Authorization: `Bearer ${handlerInput.requestEnvelope.context.System.user.accessToken}`
+      }
+    }).then(body => {
+      return response = JSON.parse(body).periods;
+    });
 
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .reprompt(speechText)
-      .getResponse();
+    if (periods.length === 1) {
+      return await request({
+        uri: 'http://us-central1-randomstudent-ba994.cloudfunctions.net/pickRandomStudent',
+        qs: {
+          class_period: periods[0]
+        },
+        headers: {
+          Authorization: `Bearer ${handlerInput.requestEnvelope.context.System.user.accessToken}`
+        }
+      }).then(body => {
+        const response = JSON.parse(body);
+        return handlerInput.responseBuilder
+          .speak(`${response.student}`)
+          .getResponse();
+      });
+    } else {
+      const speechText = 'From what period?';
+
+      return handlerInput.responseBuilder
+        .speak(speechText)
+        .reprompt(speechText)
+        .getResponse();
+    }
   },
 };
 
