@@ -10,6 +10,12 @@ const LaunchRequestHandler = {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   async handle(handlerInput) {
+    if (handlerInput.requestEnvelope.context.System.user.accessToken === undefined) {
+      return handlerInput.responseBuilder
+        .speak('Welcome to Random Student Picker. Please link your account in the Alexa app to continue.')
+        .withLinkAccountCard()
+        .getResponse();
+    }
     const periods = await request({
       uri: 'http://us-central1-randomstudent-ba994.cloudfunctions.net/listClassPeriods',
       headers: {
@@ -67,6 +73,12 @@ const FromPeriodIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'FromPeriodIntent';
   },
   async handle(handlerInput) {
+    if (handlerInput.requestEnvelope.context.System.user.accessToken === undefined) {
+      return handlerInput.responseBuilder
+        .speak('Welcome to Random Student Picker. Please link your account in the Alexa app to continue.')
+        .withLinkAccountCard()
+        .getResponse();
+    }
     const classPeriod = handlerInput.requestEnvelope.request.intent.slots.classPeriod.resolutions.resolutionsPerAuthority[0].values[0].value.id;
     
     console.log(JSON.stringify(handlerInput.requestEnvelope, 2));
@@ -107,12 +119,18 @@ const HelpIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
   },
   handle(handlerInput) {
+    if (handlerInput.requestEnvelope.context.System.user.accessToken === undefined) {
+      return handlerInput.responseBuilder
+        .speak('Welcome to Random Student Picker. Please link your account in the Alexa app to continue.')
+        .withLinkAccountCard()
+        .getResponse();
+    }
+    
     const speechText = 'Name a class period, and I will give you a random student.';
 
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .withSimpleCard('Hello World', speechText)
       .getResponse();
   },
 };
@@ -128,7 +146,6 @@ const CancelAndStopIntentHandler = {
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .withSimpleCard('Hello World', speechText)
       .getResponse();
   },
 };

@@ -16,7 +16,7 @@
         }
       },
       "isAvailableWorldwide": true,
-      "testingInstructions": "Sign into the website with Google and create a class list on the website.",
+      "testingInstructions": "Sign into the website with Google and create a class list on the website. A Google account with sample data has been created with email \"alexaopenrandomstudent@gmail.com\" and password \"alexa2019\".",
       "category": "EDUCATION_AND_REFERENCE",
       "distributionCountries": []
     },
