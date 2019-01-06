@@ -3,6 +3,7 @@
 
 const Alexa = require('ask-sdk-core');
 const request = require('request-promise');
+const errors = require('request-promise/errors');
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -18,6 +19,12 @@ const LaunchRequestHandler = {
       return response = JSON.parse(body).periods;
     });
 
+    if (periods.length === 0) {
+      return handlerInput.responseBuilder
+        .speak(`You don't have any class periods set up yet. Please visit the website to add one.`)
+        .getResponse();
+    }
+
     if (periods.length === 1) {
       return await request({
         uri: 'http://us-central1-randomstudent-ba994.cloudfunctions.net/pickRandomStudent',
@@ -32,6 +39,16 @@ const LaunchRequestHandler = {
         return handlerInput.responseBuilder
           .speak(`${response.student}`)
           .getResponse();
+      }).catch(errors.StatusCodeError, err => {
+        if (err.statusCode === 400) {
+          return handlerInput.responseBuilder
+            .speak(`There are no students in period ${periods[0]}. Please visit the website to add some.`)
+            .getResponse();
+        } else {
+          return handlerInput.responseBuilder
+            .speak('Sorry, something went wrong. Please try again later.')
+            .getResponse();
+        }
       });
     } else {
       const speechText = 'From what period?';
@@ -66,6 +83,20 @@ const FromPeriodIntentHandler = {
       return handlerInput.responseBuilder
         .speak(`${response.student}`)
         .getResponse();
+    }).catch(errors.StatusCodeError, err => {
+      if (err.statusCode === 400) {
+        return handlerInput.responseBuilder
+          .speak(`There are no students in period ${classPeriod}. Please visit the website to add some.`)
+          .getResponse();
+      } else if (err.statusCode === 404) {
+        return handlerInput.responseBuilder
+          .speak(`You don't have a period ${classPeriod} set up. Please visit the website to add it.`)
+          .getResponse();
+      } else {
+        return handlerInput.responseBuilder
+          .speak('Sorry, something went wrong. Please try again later.')
+          .getResponse();
+      }
     });
   }
 };
