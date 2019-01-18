@@ -257,7 +257,6 @@ const HelpIntentHandler = {
       });
     }
 
-    
     return response.getResponse();
   },
 };
