@@ -44,10 +44,7 @@
   "layouts": {
     "classPeriodLayout": {
       "parameters": [
-        {
-          "name": "period",
-          "type": "string"
-        }
+        "period"
       ],
       "item": {
         "type": "TouchWrapper",
@@ -57,13 +54,13 @@
           "paddingRight": "${viewport.width * 0.025}",
           "item": {
             "type": "Frame",
-            "borderRadius": "${viewport.width * 0.05}",
+            "borderRadius": "${viewport.width * 0.1}",
             "backgroundColor": "grey",
             "item": {
               "type": "Text",
-              "text": "${period}",
-              "height": "${viewport.width * 0.1}",
-              "width": "${viewport.width * 0.1}",
+              "text": "${period['name']}",
+              "height": "${viewport.width * 0.2}",
+              "width": "${viewport.width * 0.2}",
               "textAlign": "center",
               "textAlignVertical": "center",
               "spacing": "${viewport.width * 0.05}"
@@ -74,7 +71,7 @@
           "type": "SendEvent",
           "arguments": [
             "PeriodSelected",
-            "${period}"
+            "${period.name}"
           ]
         }
       }

@@ -116,18 +116,24 @@ const LaunchRequestHandler = {
         .speak(speechText)
         .reprompt(speechText);
 
-        if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
-          response.addDirective({
-            type: 'Alexa.Presentation.APL.RenderDocument',
-            version: '1.0',
-            document: require('./displays/which_period.json'),
-            datasources: {
-              periods: {
-                periods
-              }
+      console.log(JSON.stringify(periods));
+
+      if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+        response.addDirective({
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document: require('./displays/which_period.json'),
+          datasources: {
+            periods: {
+              periods: periods.map(p => {
+                return {
+                  name: p
+                };
+              })
             }
-          });
-        }
+          }
+        });
+      }
 
       return response.getResponse();
     }

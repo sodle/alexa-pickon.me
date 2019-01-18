@@ -23,7 +23,7 @@
             "codeUri": "lambda/custom",
             "functionName": "ask-custom-randomstudent-alexa-default",
             "handler": "index.handler",
-            "revisionId": "704d1fdd-bced-4fe4-a683-f250b907a012",
+            "revisionId": "2f9c5b35-98c4-4642-bba4-db2ada09d5ab",
             "runtime": "nodejs8.10"
           }
         ]
