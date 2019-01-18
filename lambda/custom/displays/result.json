@@ -1,0 +1,64 @@
+{
+  "type": "APL",
+  "version": "1.0",
+  "theme": "dark",
+  "import": [
+    {
+      "name": "alexa-layouts",
+      "version": "1.0.0"
+    }
+  ],
+  "resources": [
+    {
+      "strings": {
+        "skillName": "Random Student Picker",
+        "directions": "Please link your account in the Alexa app."
+      }
+    }
+  ],
+  "styles": {
+    "centered": {
+      "values": {
+        "textAlign": "center",
+        "paddingTop": "${viewport.height * 0.05}",
+        "paddingBottom": "${viewport.height * 0.05}"
+      }
+    },
+    "title": {
+      "extend": [
+        "centered"
+      ],
+      "values": {
+        "fontSize": 48
+      }
+    },
+    "directions": {
+      "extend": [
+        "centered"
+      ],
+      "values": {
+        "fontSize": 36
+      }
+    }
+  },
+  "mainTemplate": {
+    "parameters": [
+      "payload"
+    ],
+    "items": [
+      {
+        "height": "${viewport.height}",
+        "type": "Container",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "items": [
+          {
+            "type": "Text",
+            "style": "title",
+            "text": "${payload.student.name}"
+          }
+        ]
+      }
+    ]
+  }
+}

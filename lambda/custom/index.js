@@ -62,9 +62,23 @@ const LaunchRequestHandler = {
         }
       }).then(body => {
         const response = JSON.parse(body);
-        return handlerInput.responseBuilder
-          .speak(`${response.student}`)
-          .getResponse();
+        const alexaResponse = handlerInput.responseBuilder
+          .speak(`${response.student}`);
+        
+        if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+          alexaResponse.addDirective({
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.0',
+            document: require('./displays/result.json'),
+            datasources: {
+              student: {
+                name: response.student
+              }
+            }
+          });
+        }
+
+        return alexaResponse.getResponse();  
       }).catch(errors.StatusCodeError, err => {
         if (err.statusCode === 400) {
           return handlerInput.responseBuilder
