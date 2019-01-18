@@ -132,10 +132,20 @@ const FromPeriodIntentHandler = {
   },
   async handle(handlerInput) {
     if (handlerInput.requestEnvelope.context.System.user.accessToken === undefined) {
-      return handlerInput.responseBuilder
+      const response = handlerInput.responseBuilder
         .speak('Welcome to Random Student Picker. Please link your account in the Alexa app to continue.')
-        .withLinkAccountCard()
-        .getResponse();
+        .withLinkAccountCard();
+
+      if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+        response.addDirective({
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document: require('./displays/welcome_unlinked.json'),
+          dataSources: {}
+        });
+      }
+
+      return response.getResponse();
     }
     const classPeriod = handlerInput.requestEnvelope.request.intent.slots.classPeriod.resolutions.resolutionsPerAuthority[0].values[0].value.id;
     
@@ -150,18 +160,52 @@ const FromPeriodIntentHandler = {
       }
     }).then(body => {
       const response = JSON.parse(body);
-      return handlerInput.responseBuilder
-        .speak(`${response.student}`)
-        .getResponse();
+      const alexaResponse = handlerInput.responseBuilder
+        .speak(`${response.student}`);
+      
+      if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+        alexaResponse.addDirective({
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document: require('./displays/result.json'),
+          datasources: {
+            student: {
+              name: response.student
+            }
+          }
+        });
+      }
+
+      return alexaResponse.getResponse();
     }).catch(errors.StatusCodeError, err => {
       if (err.statusCode === 400) {
-        return handlerInput.responseBuilder
-          .speak(`There are no students in period ${classPeriod}. Please visit the website to add some.`)
-          .getResponse();
+        const response = handlerInput.responseBuilder
+            .speak(`There are no students in period ${classPeriod}. Please visit the website to add some.`);
+
+          if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+            response.addDirective({
+              type: 'Alexa.Presentation.APL.RenderDocument',
+              version: '1.0',
+              document: require('./displays/empty_period.json'),
+              datasources: {}
+            });
+          }
+  
+          return response.getResponse();
       } else if (err.statusCode === 404) {
-        return handlerInput.responseBuilder
-          .speak(`You don't have a period ${classPeriod} set up. Please visit the website to add it.`)
-          .getResponse();
+        const response = handlerInput.responseBuilder
+        .speak(`You don't have a period ${classPeriod} set up. Please visit the website to add it.`);
+
+        if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+          response.addDirective({
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.0',
+            document: require('./displays/welcome_no_periods.json'),
+            dataSources: {}
+          });
+        }
+
+        return response.getResponse();
       } else {
         return handlerInput.responseBuilder
           .speak('Sorry, something went wrong. Please try again later.')
