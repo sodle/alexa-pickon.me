@@ -5,6 +5,15 @@ const Alexa = require('ask-sdk-core');
 const request = require('request-promise');
 const errors = require('request-promise/errors');
 
+const LambdaKeepWarmHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope['detail-type'] === 'Scheduled Event';
+  },
+  handle(handlerInput) {
+    return {warm: true};
+  }
+}
+
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
