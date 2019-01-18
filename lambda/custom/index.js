@@ -222,18 +222,43 @@ const HelpIntentHandler = {
   },
   handle(handlerInput) {
     if (handlerInput.requestEnvelope.context.System.user.accessToken === undefined) {
-      return handlerInput.responseBuilder
+      const response = handlerInput.responseBuilder
         .speak('Welcome to Random Student Picker. Please link your account in the Alexa app to continue.')
-        .withLinkAccountCard()
-        .getResponse();
+        .withLinkAccountCard();
+
+      if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+        response.addDirective({
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document: require('./displays/welcome_unlinked.json'),
+          dataSources: {}
+        });
+      }
+
+      return response.getResponse();
     }
     
     const speechText = 'Name a class period, and I will give you a random student.';
 
-    return handlerInput.responseBuilder
+    const response = handlerInput.responseBuilder
       .speak(speechText)
-      .reprompt(speechText)
-      .getResponse();
+      .reprompt(speechText);
+
+    if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+      response.addDirective({
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        version: '1.0',
+        document: require('./displays/which_period.json'),
+        datasources: {
+          periods: {
+            periods
+          }
+        }
+      });
+    }
+
+    
+    return response.getResponse();
   },
 };
 
