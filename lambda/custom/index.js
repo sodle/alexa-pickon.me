@@ -78,12 +78,22 @@ const LaunchRequestHandler = {
           });
         }
 
-        return alexaResponse.getResponse();  
+        return alexaResponse.getResponse();
       }).catch(errors.StatusCodeError, err => {
         if (err.statusCode === 400) {
-          return handlerInput.responseBuilder
-            .speak(`There are no students in period ${periods[0]}. Please visit the website to add some.`)
-            .getResponse();
+          const response = handlerInput.responseBuilder
+            .speak(`There are no students in period ${periods[0]}. Please visit the website to add some.`);
+
+          if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+            alexaResponse.addDirective({
+              type: 'Alexa.Presentation.APL.RenderDocument',
+              version: '1.0',
+              document: require('./displays/empty_period.json'),
+              datasources: {}
+            });
+          }
+  
+          return alexaResponse.getResponse();
         } else {
           return handlerInput.responseBuilder
             .speak('Sorry, something went wrong. Please try again later.')
