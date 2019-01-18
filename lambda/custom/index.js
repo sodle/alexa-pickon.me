@@ -9,7 +9,7 @@ const LambdaKeepWarmHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope['detail-type'] === 'Scheduled Event';
   },
-  handle(handlerInput) {
+  handle() {
     return {warm: true};
   }
 }
@@ -406,6 +406,7 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 
 exports.handler = skillBuilder
   .addRequestHandlers(
+    LambdaKeepWarmHandler,
     LaunchRequestHandler,
     FromPeriodIntentHandler,
     HelpIntentHandler,
