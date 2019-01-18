@@ -50,17 +50,22 @@
         }
       ],
       "item": {
-        "type": "Frame",
-        "borderRadius": "${viewport.width * 0.05}",
-        "backgroundColor": "grey",
+        "type": "Container",
+        "paddingLeft": "${viewport.width * 0.025}",
+        "paddingRight": "${viewport.width * 0.025}",
         "item": {
-          "type": "Text",
-          "text": "${period}",
-          "height": "${viewport.width * 0.1}",
-          "width": "${viewport.width * 0.1}",
-          "textAlign": "center",
-          "textAlignVertical": "center",
-          "spacing": "${viewport.width * 0.05}"
+          "type": "Frame",
+          "borderRadius": "${viewport.width * 0.05}",
+          "backgroundColor": "grey",
+          "item": {
+            "type": "Text",
+            "text": "${period}",
+            "height": "${viewport.width * 0.1}",
+            "width": "${viewport.width * 0.1}",
+            "textAlign": "center",
+            "textAlignVertical": "center",
+            "spacing": "${viewport.width * 0.05}"
+          }
         }
       }
     }
@@ -82,9 +87,11 @@
             "text": "${@skillName}"
           },
           {
-            "type": "Container",
-            "direction": "row",
+            "type": "Sequence",
+            "scrollDirection": "horizontal",
             "justifyContent": "spaceBetween",
+            "width": "${viewport.width * 0.9}",
+            "spacing": "${viewport.width * 0.025}",
             "data": "${payload.periods.periods}",
             "item": {
               "type": "classPeriodLayout",
