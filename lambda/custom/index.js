@@ -11,10 +11,20 @@ const LaunchRequestHandler = {
   },
   async handle(handlerInput) {
     if (handlerInput.requestEnvelope.context.System.user.accessToken === undefined) {
-      return handlerInput.responseBuilder
+      const response = handlerInput.responseBuilder
         .speak('Welcome to Random Student Picker. Please link your account in the Alexa app to continue.')
-        .withLinkAccountCard()
-        .getResponse();
+        .withLinkAccountCard();
+
+      if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+        response.addDirective({
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document: require('./displays/welcome_unlinked.json'),
+          dataSources: {}
+        });
+      }
+
+      return response.getResponse();
     }
     const periods = await request({
       uri: 'http://us-central1-randomstudent-ba994.cloudfunctions.net/listClassPeriods',
