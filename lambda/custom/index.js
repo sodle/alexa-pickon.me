@@ -85,7 +85,7 @@ const LaunchRequestHandler = {
             .speak(`There are no students in period ${periods[0]}. Please visit the website to add some.`);
 
           if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
-            alexaResponse.addDirective({
+            response.addDirective({
               type: 'Alexa.Presentation.APL.RenderDocument',
               version: '1.0',
               document: require('./displays/empty_period.json'),
@@ -93,7 +93,7 @@ const LaunchRequestHandler = {
             });
           }
   
-          return alexaResponse.getResponse();
+          return response.getResponse();
         } else {
           return handlerInput.responseBuilder
             .speak('Sorry, something went wrong. Please try again later.')
@@ -103,10 +103,24 @@ const LaunchRequestHandler = {
     } else {
       const speechText = 'From what period?';
 
-      return handlerInput.responseBuilder
+      const response = handlerInput.responseBuilder
         .speak(speechText)
-        .reprompt(speechText)
-        .getResponse();
+        .reprompt(speechText);
+
+        if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+          response.addDirective({
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.0',
+            document: require('./displays/which_period.json'),
+            datasources: {
+              periods: {
+                periods
+              }
+            }
+          });
+        }
+
+      return response.getResponse();
     }
   },
 };

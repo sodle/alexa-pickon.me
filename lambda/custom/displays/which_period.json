@@ -1,0 +1,98 @@
+{
+  "type": "APL",
+  "version": "1.0",
+  "theme": "dark",
+  "import": [
+    {
+      "name": "alexa-layouts",
+      "version": "1.0.0"
+    }
+  ],
+  "resources": [
+    {
+      "strings": {
+        "skillName": "Which period?",
+        "directions": "Please link your account in the Alexa app."
+      }
+    }
+  ],
+  "styles": {
+    "centered": {
+      "values": {
+        "textAlign": "center",
+        "paddingTop": "${viewport.height * 0.05}",
+        "paddingBottom": "${viewport.height * 0.05}"
+      }
+    },
+    "title": {
+      "extend": [
+        "centered"
+      ],
+      "values": {
+        "fontSize": 48
+      }
+    },
+    "directions": {
+      "extend": [
+        "centered"
+      ],
+      "values": {
+        "fontSize": 36
+      }
+    }
+  },
+  "layouts": {
+    "classPeriodLayout": {
+      "parameters": [
+        {
+          "name": "period",
+          "type": "string"
+        }
+      ],
+      "item": {
+        "type": "Frame",
+        "borderRadius": "${viewport.width * 0.05}",
+        "backgroundColor": "grey",
+        "item": {
+          "type": "Text",
+          "text": "${period}",
+          "height": "${viewport.width * 0.1}",
+          "width": "${viewport.width * 0.1}",
+          "textAlign": "center",
+          "textAlignVertical": "center",
+          "spacing": "${viewport.width * 0.05}"
+        }
+      }
+    }
+  },
+  "mainTemplate": {
+    "parameters": [
+      "payload"
+    ],
+    "items": [
+      {
+        "height": "${viewport.height}",
+        "type": "Container",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "items": [
+          {
+            "type": "Text",
+            "style": "title",
+            "text": "${@skillName}"
+          },
+          {
+            "type": "Container",
+            "direction": "row",
+            "justifyContent": "spaceBetween",
+            "data": "${payload.periods.periods}",
+            "item": {
+              "type": "classPeriodLayout",
+              "period": "${data}"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
