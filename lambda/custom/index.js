@@ -82,7 +82,7 @@ const LaunchRequestHandler = {
       }).catch(errors.StatusCodeError, err => {
         if (err.statusCode === 400) {
           const response = handlerInput.responseBuilder
-            .speak(`There are no students in period ${periods[0]}. Please visit the website to add some.`);
+            .speak(`There are no students in period ${periods[0]}.. Please visit the website to add some.`);
 
           if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
             response.addDirective({
@@ -180,7 +180,7 @@ const FromPeriodIntentHandler = {
     }).catch(errors.StatusCodeError, err => {
       if (err.statusCode === 400) {
         const response = handlerInput.responseBuilder
-            .speak(`There are no students in period ${classPeriod}. Please visit the website to add some.`);
+            .speak(`There are no students in period ${classPeriod}.. Please visit the website to add some.`);
 
           if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
             response.addDirective({
@@ -342,7 +342,7 @@ const TouchPeriodEventHandler = {
     }).catch(errors.StatusCodeError, err => {
       if (err.statusCode === 400) {
         const response = handlerInput.responseBuilder
-            .speak(`There are no students in period ${classPeriod}. Please visit the website to add some.`);
+            .speak(`There are no students in period ${classPeriod}.. Please visit the website to add some.`);
 
           if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
             response.addDirective({
