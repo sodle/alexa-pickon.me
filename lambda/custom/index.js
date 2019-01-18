@@ -36,9 +36,19 @@ const LaunchRequestHandler = {
     });
 
     if (periods.length === 0) {
-      return handlerInput.responseBuilder
-        .speak(`You don't have any class periods set up yet. Please visit the website to add one.`)
-        .getResponse();
+      const response = handlerInput.responseBuilder
+        .speak(`You don't have any class periods set up yet. Please visit the website to add one.`);
+
+        if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+          response.addDirective({
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.0',
+            document: require('./displays/welcome_no_periods.json'),
+            dataSources: {}
+          });
+        }
+
+        return response.getResponse();
     }
 
     if (periods.length === 1) {

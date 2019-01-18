@@ -1,0 +1,69 @@
+{
+  "type": "APL",
+  "version": "1.0",
+  "theme": "dark",
+  "import": [
+    {
+      "name": "alexa-layouts",
+      "version": "1.0.0"
+    }
+  ],
+  "resources": [
+    {
+      "strings": {
+        "skillName": "Random Student Picker",
+        "directions": "Add class periods at https://randomstudent-ba994.firebaseapp.com"
+      }
+    }
+  ],
+  "styles": {
+    "centered": {
+      "values": {
+        "textAlign": "center",
+        "paddingTop": "${viewport.height * 0.05}",
+        "paddingBottom": "${viewport.height * 0.05}"
+      }
+    },
+    "title": {
+      "extend": [
+        "centered"
+      ],
+      "values": {
+        "fontSize": 48
+      }
+    },
+    "directions": {
+      "extend": [
+        "centered"
+      ],
+      "values": {
+        "fontSize": 36
+      }
+    }
+  },
+  "mainTemplate": {
+    "parameters": [
+      "payload"
+    ],
+    "items": [
+      {
+        "height": "${viewport.height}",
+        "type": "Container",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "items": [
+          {
+            "type": "Text",
+            "style": "title",
+            "text": "${@skillName}"
+          },
+          {
+            "type": "Text",
+            "style": "directions",
+            "text": "${@directions}"
+          }
+        ]
+      }
+    ]
+  }
+}
