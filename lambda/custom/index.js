@@ -287,12 +287,104 @@ const SessionEndedRequestHandler = {
   },
 };
 
+const TouchPeriodEventHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'Alexa.Presentation.APL.UserEvent'
+      && handlerInput.requestEnvelope.request.arguments[0] === 'PeriodSelected';
+  },
+  async handle(handlerInput) {
+    if (handlerInput.requestEnvelope.context.System.user.accessToken === undefined) {
+      const response = handlerInput.responseBuilder
+        .speak('Welcome to Random Student Picker. Please link your account in the Alexa app to continue.')
+        .withLinkAccountCard();
+
+      if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+        response.addDirective({
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document: require('./displays/welcome_unlinked.json'),
+          dataSources: {}
+        });
+      }
+
+      return response.getResponse();
+    }
+    const classPeriod = handlerInput.requestEnvelope.request.arguments[1];
+    
+    console.log(JSON.stringify(handlerInput.requestEnvelope, 2));
+    return await request({
+      uri: 'http://us-central1-randomstudent-ba994.cloudfunctions.net/pickRandomStudent',
+      qs: {
+        class_period: classPeriod
+      },
+      headers: {
+        Authorization: `Bearer ${handlerInput.requestEnvelope.context.System.user.accessToken}`
+      }
+    }).then(body => {
+      const response = JSON.parse(body);
+      const alexaResponse = handlerInput.responseBuilder
+        .speak(`${response.student}`);
+      
+      if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+        alexaResponse.addDirective({
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document: require('./displays/result.json'),
+          datasources: {
+            student: {
+              name: response.student
+            }
+          }
+        });
+      }
+
+      return alexaResponse.getResponse();
+    }).catch(errors.StatusCodeError, err => {
+      if (err.statusCode === 400) {
+        const response = handlerInput.responseBuilder
+            .speak(`There are no students in period ${classPeriod}. Please visit the website to add some.`);
+
+          if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+            response.addDirective({
+              type: 'Alexa.Presentation.APL.RenderDocument',
+              version: '1.0',
+              document: require('./displays/empty_period.json'),
+              datasources: {}
+            });
+          }
+  
+          return response.getResponse();
+      } else if (err.statusCode === 404) {
+        const response = handlerInput.responseBuilder
+        .speak(`You don't have a period ${classPeriod} set up. Please visit the website to add it.`);
+
+        if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+          response.addDirective({
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.0',
+            document: require('./displays/welcome_no_periods.json'),
+            dataSources: {}
+          });
+        }
+
+        return response.getResponse();
+      } else {
+        return handlerInput.responseBuilder
+          .speak('Sorry, something went wrong. Please try again later.')
+          .getResponse();
+      }
+    });
+  }
+};
+
 const ErrorHandler = {
   canHandle() {
     return true;
   },
   handle(handlerInput, error) {
     console.log(`Error handled: ${error.message}`);
+
+    console.log(JSON.stringify(handlerInput));
 
     return handlerInput.responseBuilder
       .speak('Sorry, I can\'t understand the command. Please say again.')
@@ -309,7 +401,8 @@ exports.handler = skillBuilder
     FromPeriodIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
-    SessionEndedRequestHandler
+    SessionEndedRequestHandler,
+    TouchPeriodEventHandler
   )
   .addErrorHandlers(ErrorHandler)
   .lambda();
