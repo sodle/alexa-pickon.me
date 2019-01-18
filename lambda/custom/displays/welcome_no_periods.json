@@ -53,6 +53,14 @@
         "justifyContent": "center",
         "items": [
           {
+            "type": "Image",
+            "source": "https://randomstudent-ba994.firebaseapp.com/apple.jpg",
+            "position": "absolute",
+            "width": "100vw",
+            "height": "100vh",
+            "scale": "best-fill" 
+          },
+          {
             "type": "Text",
             "style": "title",
             "text": "${@skillName}"
