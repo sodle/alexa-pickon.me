@@ -6,11 +6,11 @@
       "merge": {},
       "resources": {
         "manifest": {
-          "eTag": "6793a10ee877816d085b02fdcfcb4dda"
+          "eTag": "e80e60ac4a54b36b4c9a04be68c8c43e"
         },
         "interactionModel": {
           "en-US": {
-            "eTag": "bff0edf8a82e490f7a59b6ff18d9af32"
+            "eTag": "358b107966e2326036b7b6d8c13bb80c"
           }
         },
         "lambda": [
@@ -23,7 +23,7 @@
             "codeUri": "lambda/custom",
             "functionName": "ask-custom-randomstudent-alexa-default",
             "handler": "index.handler",
-            "revisionId": "07d1b987-a228-45b2-ad3a-391481480fc3",
+            "revisionId": "85addea0-441a-4540-a7f1-d180d025de2d",
             "runtime": "nodejs8.10"
           }
         ]
