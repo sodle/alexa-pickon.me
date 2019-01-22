@@ -6,7 +6,7 @@
       "merge": {},
       "resources": {
         "manifest": {
-          "eTag": "e80e60ac4a54b36b4c9a04be68c8c43e"
+          "eTag": "6bb7f16c1261e78bc6c1a0278ba2b273"
         },
         "interactionModel": {
           "en-US": {
@@ -23,7 +23,7 @@
             "codeUri": "lambda/custom",
             "functionName": "ask-custom-randomstudent-alexa-default",
             "handler": "index.handler",
-            "revisionId": "fdec7aec-36ec-4218-9d3b-65ea1bcf1b60",
+            "revisionId": "de959102-0b56-4563-81a9-b6f5ab59b6b5",
             "runtime": "nodejs8.10"
           }
         ]

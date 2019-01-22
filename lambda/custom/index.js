@@ -21,7 +21,7 @@ const LaunchRequestHandler = {
   async handle(handlerInput) {
     if (handlerInput.requestEnvelope.context.System.user.accessToken === undefined) {
       const response = handlerInput.responseBuilder
-        .speak('Welcome to Random Student Picker. Please link your account in the Alexa app to continue.')
+        .speak('Welcome to PickOn.Me. Please link your account in the Alexa app to continue.')
         .withLinkAccountCard();
 
       if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
@@ -148,7 +148,7 @@ const FromPeriodIntentHandler = {
   async handle(handlerInput) {
     if (handlerInput.requestEnvelope.context.System.user.accessToken === undefined) {
       const response = handlerInput.responseBuilder
-        .speak('Welcome to Random Student Picker. Please link your account in the Alexa app to continue.')
+        .speak('Welcome to PickOn.Me. Please link your account in the Alexa app to continue.')
         .withLinkAccountCard();
 
       if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
@@ -238,7 +238,7 @@ const HelpIntentHandler = {
   async handle(handlerInput) {
     if (handlerInput.requestEnvelope.context.System.user.accessToken === undefined) {
       const response = handlerInput.responseBuilder
-        .speak('Welcome to Random Student Picker. Please link your account in the Alexa app to continue.')
+        .speak('Welcome to PickOn.Me. Please link your account in the Alexa app to continue.')
         .withLinkAccountCard();
 
       if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
@@ -339,7 +339,7 @@ const TouchPeriodEventHandler = {
   async handle(handlerInput) {
     if (handlerInput.requestEnvelope.context.System.user.accessToken === undefined) {
       const response = handlerInput.responseBuilder
-        .speak('Welcome to Random Student Picker. Please link your account in the Alexa app to continue.')
+        .speak('Welcome to PickOn.Me. Please link your account in the Alexa app to continue.')
         .withLinkAccountCard();
 
       if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {

@@ -9,7 +9,7 @@
             "open random student for period A",
             "ask random student for 3rd hour"
           ],
-          "name": "Random Student",
+          "name": "PickOn.Me - Random Student Picker",
           "description": "Pick a random student from your classes. Visit https://randomstudent-ba994.firebaseapp.com to set up.",
           "smallIconUri": "https://randomstudent-ba994.firebaseapp.com/skillIconSmall.png",
           "largeIconUri": "https://randomstudent-ba994.firebaseapp.com/skillIconLarge.png"
@@ -28,7 +28,7 @@
       "allowsPurchases": false,
       "locales": {
         "en-US": {
-          "privacyPolicyUrl": "https://randomstudent-ba994.firebaseapp.com/privacy"
+          "privacyPolicyUrl": "https://pickon.me/privacy"
         }
       }
     },
