@@ -41,7 +41,7 @@ const LaunchRequestHandler = {
         Authorization: `Bearer ${handlerInput.requestEnvelope.context.System.user.accessToken}`
       }
     }).then(body => {
-      return response = JSON.parse(body).periods;
+      return JSON.parse(body).periods;
     });
 
     if (periods.length === 0) {
@@ -235,7 +235,7 @@ const HelpIntentHandler = {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
       && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
   },
-  handle(handlerInput) {
+  async handle(handlerInput) {
     if (handlerInput.requestEnvelope.context.System.user.accessToken === undefined) {
       const response = handlerInput.responseBuilder
         .speak('Welcome to Random Student Picker. Please link your account in the Alexa app to continue.')
@@ -252,8 +252,33 @@ const HelpIntentHandler = {
 
       return response.getResponse();
     }
+
+    const periods = await request({
+      uri: 'http://us-central1-randomstudent-ba994.cloudfunctions.net/listClassPeriods',
+      headers: {
+        Authorization: `Bearer ${handlerInput.requestEnvelope.context.System.user.accessToken}`
+      }
+    }).then(body => {
+      return JSON.parse(body).periods;
+    });
+
+    if (periods.length === 0 || !periods) {
+      const response = handlerInput.responseBuilder
+        .speak(`I can pick a random student from your classes, but first you need to enter your class lists online.`);
+
+        if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+          response.addDirective({
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.0',
+            document: require('./displays/welcome_no_periods.json'),
+            dataSources: {}
+          });
+        }
+
+        return response.getResponse();
+    }
     
-    const speechText = 'Name a class period, and I will give you a random student.';
+    const speechText = 'Name a class period, and I will give you a random student from that period.';
 
     const response = handlerInput.responseBuilder
       .speak(speechText)
@@ -266,7 +291,11 @@ const HelpIntentHandler = {
         document: require('./displays/which_period.json'),
         datasources: {
           periods: {
-            periods
+            periods: periods.map(p => {
+              return {
+                name: p
+              };
+            })
           }
         }
       });
