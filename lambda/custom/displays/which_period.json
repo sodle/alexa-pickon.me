@@ -106,7 +106,7 @@
             "type": "Sequence",
             "scrollDirection": "horizontal",
             "justifyContent": "spaceBetween",
-            "width": "${viewport.width * 0.9}",
+            "width": "${viewport.width}",
             "spacing": "${viewport.width * 0.025}",
             "data": "${payload.periods.periods}",
             "item": {
