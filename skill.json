@@ -6,17 +6,17 @@
           "summary": "Pick a random student from your classes",
           "examplePhrases": [
             "Alexa open random student",
-            "open random student for period A",
+            "launch random student",
             "ask random student for 3rd hour"
           ],
           "name": "PickOn.Me - Random Student Picker",
-          "description": "Pick a random student from your classes. Visit https://randomstudent-ba994.firebaseapp.com to set up.",
-          "smallIconUri": "https://randomstudent-ba994.firebaseapp.com/skillIconSmall.png",
-          "largeIconUri": "https://randomstudent-ba994.firebaseapp.com/skillIconLarge.png"
+          "description": "Pick a random student from your classes. Visit https://pickon.me to set up.",
+          "smallIconUri": "https://pickon.me/skillIconSmall.png",
+          "largeIconUri": "https://pickon.me/skillIconLarge.png"
         }
       },
       "isAvailableWorldwide": true,
-      "testingInstructions": "Sign into the website with Google and create a class list on the website. A Google account with sample data has been created with email \"alexaopenrandomstudent@gmail.com\" and password \"alexa2019\".",
+      "testingInstructions": "Sign into the website with Google and create a class list on the website. A Google account with sample data has been created with email \"alexaopenrandomstudent@gmail.com\" and password \"alexa2019\".\n\nResponse to previous feedback: buttons for class periods on the home screen are not \"cropped\", they can be scrolled through horizontally by swiping across the display.",
       "category": "EDUCATION_AND_REFERENCE",
       "distributionCountries": []
     },

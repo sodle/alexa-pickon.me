@@ -149,6 +149,7 @@ const FromPeriodIntentHandler = {
     if (handlerInput.requestEnvelope.context.System.user.accessToken === undefined) {
       const response = handlerInput.responseBuilder
         .speak('Welcome to PickOn.Me. Please link your account in the Alexa app to continue.')
+        .withShouldEndSession(true)
         .withLinkAccountCard();
 
       if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
@@ -209,7 +210,7 @@ const FromPeriodIntentHandler = {
           return response.getResponse();
       } else if (err.statusCode === 404) {
         const response = handlerInput.responseBuilder
-        .speak(`You don't have a period ${classPeriod} set up. Please visit the website to add it.`);
+          .speak(`You don't have a period ${classPeriod} set up. Please visit the website to add it.`);
 
         if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
           response.addDirective({
@@ -239,6 +240,7 @@ const HelpIntentHandler = {
     if (handlerInput.requestEnvelope.context.System.user.accessToken === undefined) {
       const response = handlerInput.responseBuilder
         .speak('Welcome to PickOn.Me. Please link your account in the Alexa app to continue.')
+        .withShouldEndSession(true)
         .withLinkAccountCard();
 
       if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
@@ -314,10 +316,20 @@ const CancelAndStopIntentHandler = {
   handle(handlerInput) {
     const speechText = 'Goodbye!';
 
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .getResponse();
-  },
+    const response = handlerInput.responseBuilder
+      .speak(speechText);
+
+    if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces.hasOwnProperty('Alexa.Presentation.APL')) {
+      response.addDirective({
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        version: '1.0',
+        document: require('./displays/goodbye.json'),
+        dataSources: {}
+      });
+    }
+
+    return response.getResponse();
+  }
 };
 
 const SessionEndedRequestHandler = {
